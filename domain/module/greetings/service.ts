@@ -7,13 +7,15 @@ type Output = {
     executedAt: Date
 }
 
-type DatePort = () => Date
+export interface ClockPort {
+    now(): Date
+}
 
-export function service(now: DatePort): (req: Input) => Output {
+export function service(clockPort: ClockPort): (req: Input) => Output {
     return (req: Input): Output => {
         return {
             greetings: `Hi, ${req.name}! :)`,
-            executedAt: now(),
+            executedAt: clockPort.now(),
         }
     }
 }

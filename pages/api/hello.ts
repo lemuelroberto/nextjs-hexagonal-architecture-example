@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { ClockDateAdapter } from '@adapter/module/greetings/clock-date-adapter'
 import { service } from '@domain/module/greetings/service'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -11,7 +12,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ): void {
-  const execute = service((): Date => { return new Date() })
+  const execute = service(new ClockDateAdapter())
   const output = execute({ name: 'Ana' })
   res.status(200).json({
     greetings: output.greetings,
