@@ -4,10 +4,16 @@ type Input = {
 
 type Output = {
     greetings: string
+    executedAt: Date
 }
 
-export function service(): (req: Input) => Output {
+type DatePort = () => Date
+
+export function service(now: DatePort): (req: Input) => Output {
     return (req: Input): Output => {
-        return {greetings: `Hi, ${req.name}! :)`}
+        return {
+            greetings: `Hi, ${req.name}! :)`,
+            executedAt: now(),
+        }
     }
 }
